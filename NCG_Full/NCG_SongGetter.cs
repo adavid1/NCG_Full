@@ -52,7 +52,7 @@ namespace NCG_Full
                     string uploadDate = video.Snippet.PublishedAt.ToString().Substring(0, 10);
                     string todayDate = DateTime.Now.ToString().Substring(0, 10);
 
-                    if ((CheckIfCopyrighted(videoUrl) == false) && /*(uploadDate == todayDate)*/ && (CheckIfAlreadyDL(video.Id.VideoId) == false))
+                    if ((CheckIfCopyrighted(videoUrl) == false) && (uploadDate == todayDate) && (CheckIfAlreadyDL(video.Id.VideoId) == false))
                     {
                         Console.WriteLine("\nDownloading " + videoName);
                         AudioDownloader(videoUrl, videoName); //Download the video
