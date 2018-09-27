@@ -28,7 +28,7 @@ namespace NCG_Full
             {
                 int hourNow = DateTime.Now.Hour;
 
-                if ((hourNow > 12 && hourNow < 16) && File.ReadAllText("LastUpload.txt") != Convert.ToString(DateTime.Now.Date))
+                if ((hourNow > 12 && hourNow < 16) && File.ReadAllText(basePath + @"Memory\LastUpload.txt") != Convert.ToString(DateTime.Now.Date))
                 {
 
                     Console.WriteLine("\nLooking for uploading...");
@@ -73,7 +73,7 @@ namespace NCG_Full
                         }
                     }
 
-                    File.WriteAllText("LastUpload.txt", Convert.ToString(DateTime.Now.Date));
+                    File.WriteAllText(basePath + @"Memory\LastUpload.txt", Convert.ToString(DateTime.Now.Date));
                 }
                 else
                 {

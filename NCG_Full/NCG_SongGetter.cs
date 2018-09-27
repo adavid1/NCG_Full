@@ -11,7 +11,8 @@ namespace NCG_Full
 {
     class NCG_SongGetter
     {
-        public static string pathToSongs = @"C:\Users\Axel David\Documents\Code\NCG\songs\";
+        const string basePath = @"C:\Users\Axel David\Documents\Code\NCG\";
+        public static string pathToSongs = basePath + @"songs\";
         public static string v_channelName;
 
         public static void SongGetter()
@@ -52,13 +53,13 @@ namespace NCG_Full
                     string uploadDate = video.Snippet.PublishedAt.ToString().Substring(0, 10);
                     string todayDate = DateTime.Now.ToString().Substring(0, 10);
 
-                    if ((CheckIfCopyrighted(videoUrl) == false) && (uploadDate == todayDate) && (CheckIfAlreadyDL(video.Id.VideoId) == false))
+                    if ((CheckIfCopyrighted(videoUrl) == false) /*&& (uploadDate == todayDate)*/ && (CheckIfAlreadyDL(video.Id.VideoId) == false))
                     {
                         Console.WriteLine("\nDownloading " + videoName);
                         AudioDownloader(videoUrl, videoName); //Download the video
                         RenameAudioFile(videoName);
 
-                        File.AppendAllText("DownloadHistory.txt", video.Id.VideoId + Environment.NewLine);
+                        File.AppendAllText(basePath + @"Memory\DownloadHistory.txt", video.Id.VideoId + Environment.NewLine);
                     }
                 }
             }
@@ -88,7 +89,7 @@ namespace NCG_Full
 
         public static bool CheckIfAlreadyDL(string videoId)
         {
-            foreach (string line in File.ReadLines("DownloadHistory.txt"))
+            foreach (string line in File.ReadLines(basePath + @"Memory\DownloadHistory.txt"))
             {
                 if (line.Contains(videoId))
                 {
