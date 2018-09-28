@@ -101,21 +101,21 @@ namespace NCG_Full
                 case "La Belle Musique":
                     if (nonFormatedName.Contains('('))
                     {
-                        formatedName = nonFormatedName.Split('(')[0] + "[Pop/House]";
+                        formatedName = nonFormatedName.Split('(')[0] + "[Pop∖House]";
                     }
                     else
                     {
-                        formatedName = nonFormatedName + " [Pop/House]";
+                        formatedName = nonFormatedName + " [Pop∖House]";
                     }
                     break;
                 case "Indefinitely Music":
                     if (nonFormatedName.Contains("Lyrics"))
                     {
-                        formatedName = nonFormatedName.Split('(')[0] + "[Pop/House]";
+                        formatedName = nonFormatedName.Split('(')[0] + "[Pop∖House]";
                     }
                     else
                     {
-                        formatedName = nonFormatedName + " [Pop/House]";
+                        formatedName = nonFormatedName + " [Pop∖House]";
                     }
                     break;
             }

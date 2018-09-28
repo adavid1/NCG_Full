@@ -107,12 +107,11 @@ namespace NCG_Full
             var video = new Video();
             video.Snippet = new VideoSnippet();
             video.Snippet.Title = videoTitle.Replace('∖', '\\');
-            //video.Snippet.Description = "Default Video Description";
-            //video.Snippet.Tags = new string[] { "tag1", "tag2" };
+            video.Snippet.Description = "✩ 100% free song to use ✩\n✩ no copyright ✩\n✩ enjoy ! ✩";
+            video.Snippet.Tags = new string[] { "copyright", "free", "music", "song", "copyrighted", "musics", "songs" };
             //video.Snippet.CategoryId = "22"; // See https://developers.google.com/youtube/v3/docs/videoCategories/list
             video.Status = new VideoStatus();
-            video.Status.PrivacyStatus = "public"; // or "private" or "public"
-            //video.Status.PublishAt =
+            video.Status.PrivacyStatus = "public"; // or "private"
 
             using (var fileStream = new FileStream(videoPath, FileMode.Open))
             {
