@@ -98,16 +98,6 @@ namespace NCG_Full
                 case "DJ Smile Music":
                     formatedName = nonFormatedName + " [Electro∖House]";
                     break;
-                case "La Belle Musique":
-                    if (nonFormatedName.Contains('('))
-                    {
-                        formatedName = nonFormatedName.Split('(')[0] + "[Pop∖House]";
-                    }
-                    else
-                    {
-                        formatedName = nonFormatedName + " [Pop∖House]";
-                    }
-                    break;
                 case "Indefinitely Music":
                     if (nonFormatedName.Contains("Lyrics"))
                     {

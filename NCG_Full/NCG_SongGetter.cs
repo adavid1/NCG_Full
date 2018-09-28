@@ -32,7 +32,6 @@ namespace NCG_Full
             channels.Rows.Add("UC3ifTl5zKiCAhHIBQYcaTeg", "Proximity");
             channels.Rows.Add("UCMOgdURr7d8pOVlc-alkfRg", "xKito Music");
             channels.Rows.Add("UC3xS7KD-nL8dpireWEUIxNA", "Indefinitely Music");
-            channels.Rows.Add("UCXKr4vbqJkg4cXmdvaAEjYw", "La Belle Musique"); //long duration risk !
             channels.Rows.Add("UCV3IseaOx-KwjBgeiood8gg", "DJ Smile Music");
             channels.Rows.Add("UCaB_KyYOjfNHBm0f-TvBmiw", "TrapMusicHDTV");
             channels.Rows.Add("UCi2bIyFtz-JdI-ou8kaqsqg", "Trap Music Now.");
