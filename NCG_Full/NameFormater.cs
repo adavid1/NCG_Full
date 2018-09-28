@@ -13,9 +13,6 @@ namespace NCG_Full
                 case "Vital EDM":
                     formatedName = nonFormatedName.Split(']')[1].Substring(1) + " [Electro∖Dubstep]";
                     break;
-                case "Vlog No Copyright Music":
-                    formatedName = nonFormatedName.Split('(')[0] + "[Chill]";
-                    break;
                 case "Arc North":
                     if (nonFormatedName.Contains('['))
                     {
@@ -49,7 +46,7 @@ namespace NCG_Full
                     }
                     else
                     {
-                        formatedName = nonFormatedName + "[Trap]";
+                        formatedName = nonFormatedName + " [Trap]";
                     }
                     break;
                 case "Proximity":
@@ -59,11 +56,67 @@ namespace NCG_Full
                     }
                     else
                     {
-                        formatedName = nonFormatedName + "[Electro∖Chill]";
+                        formatedName = nonFormatedName + " [Electro∖Chill]";
                     }
                     break;
                 case "xKito Music":
                     formatedName = nonFormatedName + " [Electro∖Chill]";
+                    break;
+                case "House Nation":
+                    if (nonFormatedName.Contains('['))
+                    {
+                        formatedName = nonFormatedName.Split('[')[0] + "[Electro∖House]";
+                    }
+                    else
+                    {
+                        formatedName = nonFormatedName + " [Electro∖House]";
+                    }
+                    break;
+                case "EDM Bot":
+                        formatedName = nonFormatedName + " [Trap∖EDM]";
+                    break;
+                case "Trap Music Now.":
+                    if (nonFormatedName.Contains('['))
+                    {
+                        formatedName = nonFormatedName.Split('[')[0] + "[Trap]";
+                    }
+                    else
+                    {
+                        formatedName = nonFormatedName + " [Trap]";
+                    }
+                    break;
+                case "TrapMusicHDTV":
+                    if (nonFormatedName.Contains('['))
+                    {
+                        formatedName = nonFormatedName.Split('[')[0] + "[Trap]";
+                    }
+                    else
+                    {
+                        formatedName = nonFormatedName + " [Trap]";
+                    }
+                    break;
+                case "DJ Smile Music":
+                    formatedName = nonFormatedName + " [Electro∖House]";
+                    break;
+                case "La Belle Musique":
+                    if (nonFormatedName.Contains('('))
+                    {
+                        formatedName = nonFormatedName.Split('(')[0] + "[Pop/House]";
+                    }
+                    else
+                    {
+                        formatedName = nonFormatedName + " [Pop/House]";
+                    }
+                    break;
+                case "Indefinitely Music":
+                    if (nonFormatedName.Contains("Lyrics"))
+                    {
+                        formatedName = nonFormatedName.Split('(')[0] + "[Pop/House]";
+                    }
+                    else
+                    {
+                        formatedName = nonFormatedName + " [Pop/House]";
+                    }
                     break;
             }
 

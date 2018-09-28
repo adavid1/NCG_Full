@@ -24,14 +24,21 @@ namespace NCG_Full
             channels.Columns.Add("id", typeof(string));
             channels.Columns.Add("name", typeof(string));
             channels.Rows.Add("UCM3sYnaN67Epz3vrZxPRRMA", "Vital EDM");
-            channels.Rows.Add("UCEickjZj99-JJIU8_IJ7J-Q", "Vlog No Copyright Music");
             channels.Rows.Add("UCqawukswZ0GUo4efsX9kLGw", "Arc North");
             channels.Rows.Add("UCCeAaS4K5IOr3n6KUZvN9zA", "GANGSTER GANG");
             channels.Rows.Add("UC4AGuSvfkIxX3r7Of7HgRFg", "Trap Monkey");
             channels.Rows.Add("UCh3QapbW5p-PKwrN46RJG5w", "Simplify.");
-            //channels.Rows.Add("UC65afEgL62PGFWXY7n6CUbA", "Trap City");
+            channels.Rows.Add("UC65afEgL62PGFWXY7n6CUbA", "Trap City");
             channels.Rows.Add("UC3ifTl5zKiCAhHIBQYcaTeg", "Proximity");
             channels.Rows.Add("UCMOgdURr7d8pOVlc-alkfRg", "xKito Music");
+            channels.Rows.Add("UC3xS7KD-nL8dpireWEUIxNA", "Indefinitely Music");
+            //channels.Rows.Add("UCXKr4vbqJkg4cXmdvaAEjYw", "La Belle Musique"); //long duration risk !
+            channels.Rows.Add("UCV3IseaOx-KwjBgeiood8gg", "DJ Smile Music");
+            channels.Rows.Add("UCaB_KyYOjfNHBm0f-TvBmiw", "TrapMusicHDTV");
+            channels.Rows.Add("UCi2bIyFtz-JdI-ou8kaqsqg", "Trap Music Now.");
+            channels.Rows.Add("UCvmUdL2NHWlj1NRiNJPI-TQ", "EDM Bot");
+            channels.Rows.Add("UCj_Y-xJ2DRDGP4ilfzplCOQ", "House Nation");
+
 
             foreach (DataRow channel in channels.Rows)
             {
@@ -53,7 +60,7 @@ namespace NCG_Full
                     string uploadDate = video.Snippet.PublishedAt.ToString().Substring(0, 10);
                     string todayDate = DateTime.Now.ToString().Substring(0, 10);
 
-                    if ((CheckIfCopyrighted(videoUrl) == false) /*&& (uploadDate == todayDate)*/ && (CheckIfAlreadyDL(video.Id.VideoId) == false))
+                    if ((CheckIfCopyrighted(videoUrl) == false) && (uploadDate == todayDate) && (CheckIfAlreadyDL(video.Id.VideoId) == false) && !videoName.Contains("Video"))
                     {
                         Console.WriteLine("\nDownloading " + videoName);
                         AudioDownloader(videoUrl, videoName); //Download the video

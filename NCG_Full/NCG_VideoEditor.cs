@@ -20,12 +20,13 @@ namespace NCG_Full
             Console.WriteLine("============================");
 
             bool songFolder = true, picFolder = true;
+            string songPath = "", songName = "", backgroundPath = "";
+            int songDuration = 0;
 
             while (songFolder && picFolder)
             {
                 Console.WriteLine("\nLooking for editing...");
 
-                string songPath = "", songName = "", backgroundPath = "";
                 songFolder = false;
                 picFolder = false;
 
@@ -41,6 +42,7 @@ namespace NCG_Full
                     .First();
 
                     songPath = oldestSong.FullName;
+                    songDuration = GetSongDuration(songPath);
                     songName = Path.GetFileNameWithoutExtension(oldestSong.Name);
                 }
                 else
@@ -66,10 +68,18 @@ namespace NCG_Full
                 }
 
 
+                if (songDuration > 300) //delete file is duration is more than 5min
+                {
+                    Console.WriteLine("Song too long, deleting file...");
+                    File.Delete(songPath);
+                    break;
+                }
+
+
                 if (songFolder && picFolder)
                 {
                     string videoPath = basePath + @"videos\" + songName + ".mp4";
-                    int bitrate = 44100, samplerate = 192000, fps = 30, audioDuration = 0;
+                    int bitrate = 44100, samplerate = 192000, fps = 30;
                     double progress = 0;
                     byte[] audioPart1, audioPart2, audioPart3, audioPart4;
 
@@ -99,28 +109,21 @@ namespace NCG_Full
                         samplerate = reader.Mp3WaveFormat.SampleRate;
                     }
 
-                    using (var shell = ShellObject.FromParsingName(songPath)) //get audio duration
-                    {
-                        IShellProperty durationProp = shell.Properties.System.Media.Duration;
-                        var t = (ulong)durationProp.ValueAsObject;
-                        audioDuration = Convert.ToInt32(TimeSpan.FromTicks((long)t).TotalSeconds) + 1;
-                    }
-
                     Console.WriteLine("\nEditing video...");
                     Console.WriteLine("Name : " + songName);
-                    Console.WriteLine("Duration : " + audioDuration.ToString() + " seconds");
+                    Console.WriteLine("Duration : " + songDuration.ToString() + " seconds");
                     Console.WriteLine(" ");
 
                     using (var videoWriter = new VideoFileWriter())
                     using (Bitmap background = Bitmap.FromFile(backgroundPath) as Bitmap)
                     {
-                        double totalFrame = audioDuration * fps;
+                        double totalFrame = songDuration * fps;
                         int x = 0, playCounter = 0;
                         Bitmap logo = null, image = null;
 
                         videoWriter.Open(videoPath, 1920, 1080, fps, VideoCodec.MPEG4, 50000000, AudioCodec.MP3, bitrate, samplerate, 2);
 
-                        for (int seconds = 0; seconds < audioDuration; seconds++) //Per second
+                        for (int seconds = 0; seconds < songDuration; seconds++) //Per second
                         {
                             for (int compt = 0; compt < fps; compt++) //30 times loop
                             {
@@ -164,8 +167,10 @@ namespace NCG_Full
                     }
 
                     Console.WriteLine("Video edited");
-
                     ClearFiles(videoPath, backgroundPath, songPath);
+
+                    Console.WriteLine("\nExiting NCG Video Editor\n\n");
+                    break;
                 }
                 else
                 {
@@ -210,6 +215,16 @@ namespace NCG_Full
             if (!File.Exists(songPath))
             {
                 Console.WriteLine("Song removed");
+            }
+        }
+
+        public static int GetSongDuration(string songPath)
+        {
+            using (var shell = ShellObject.FromParsingName(songPath)) //get audio duration
+            {
+                IShellProperty durationProp = shell.Properties.System.Media.Duration;
+                var t = (ulong)durationProp.ValueAsObject;
+                return Convert.ToInt32(TimeSpan.FromTicks((long)t).TotalSeconds) + 1;
             }
         }
     }
