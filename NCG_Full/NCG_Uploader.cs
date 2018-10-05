@@ -28,7 +28,7 @@ namespace NCG_Full
             {
                 int hourNow = DateTime.Now.Hour;
 
-                if ((hourNow > 12 && hourNow < 16) && File.ReadAllText(basePath + @"Memory\LastUpload.txt") != Convert.ToString(DateTime.Now.Date))
+                if ((hourNow > 10 && hourNow < 16) && File.ReadAllText(basePath + @"Memory\LastUpload.txt") != Convert.ToString(DateTime.Now.Date))
                 {
 
                     Console.WriteLine("\nLooking for uploading...");
@@ -129,7 +129,7 @@ namespace NCG_Full
             {
                 case UploadStatus.Uploading:
                     Console.SetCursorPosition(0, Console.CursorTop - 1);
-                    ClearCurrentConsoleLine();
+                    ConsoleTools.ClearCurrentConsoleLine();
                     Console.WriteLine("{0} bytes sent", progress.BytesSent);
                     break;
 
@@ -152,14 +152,6 @@ namespace NCG_Full
             {
                 Console.WriteLine("Video file removed");
             }
-        }
-
-        public static void ClearCurrentConsoleLine()
-        {
-            int currentLineCursor = Console.CursorTop;
-            Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, currentLineCursor);
         }
     }
 }

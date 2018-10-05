@@ -12,6 +12,7 @@ namespace NCG_Full
             {
                 case "Vital EDM":
                     formatedName = nonFormatedName.Split(']')[1].Substring(1) + " [Electro∖Dubstep]";
+                    formatedName.Replace(" (Vital Release)", "");
                     break;
                 case "Arc North":
                     if (nonFormatedName.Contains('['))

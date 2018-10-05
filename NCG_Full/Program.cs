@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace NCG_Full
 {
@@ -18,6 +19,28 @@ namespace NCG_Full
                 NCG_VideoEditor.VideoEditor();
 
                 NCG_Uploader.Uploader();
+
+
+                Console.Write("Sleeping... \n");
+
+                for (int minutes = 29; minutes >= 0; minutes--) // 30 min
+                {
+                    for (int seconds = 60; seconds >= 1; seconds--)
+                    {
+                        ConsoleTools.ClearCurrentConsoleLine();
+                        if (seconds == 60)
+                        {
+                            Console.Write("Before restart : {0}:00", (minutes+1).ToString("00"));
+                        }
+                        else
+                        {
+                            Console.Write("Before restart : {0}:{1}", minutes.ToString("00"), seconds.ToString("00"));
+                        }
+                        Thread.Sleep(1000);
+                    }
+                }
+
+                Console.Write("\n\n\n");
             }
         }
     }

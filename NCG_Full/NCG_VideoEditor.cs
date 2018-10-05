@@ -156,7 +156,7 @@ namespace NCG_Full
                             }
                             progress = ((double)x / totalFrame) * 100;
                             Console.SetCursorPosition(0, Console.CursorTop - 1);
-                            ClearCurrentConsoleLine();
+                            ConsoleTools.ClearCurrentConsoleLine();
                             Console.WriteLine("Progress : " + (int)progress + "%");
                         }
                         videoWriter.WriteAudioFrame(audioPart1);
@@ -190,14 +190,6 @@ namespace NCG_Full
             graphics.Dispose();
 
             return output;
-        }
-
-        public static void ClearCurrentConsoleLine()
-        {
-            int currentLineCursor = Console.CursorTop;
-            Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, currentLineCursor);
         }
 
         public static void ClearFiles(string videoPath, string backgroundPath, string songPath)
