@@ -109,6 +109,10 @@ namespace NCG_Full
                         formatedName = nonFormatedName + " [Pop∖House]";
                     }
                     break;
+                case "Car Music":
+                    formatedName = nonFormatedName.Replace("(Bass Boosted)","");
+                    formatedName = formatedName + " [Electro∖House]";
+                    break;
             }
 
             return formatedName;

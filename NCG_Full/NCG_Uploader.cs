@@ -17,6 +17,8 @@ namespace NCG_Full
     {
         const string basePath = @"C:\Users\Axel David\Documents\Code\NCG\";
 
+        const string facebookLink = "https://www.facebook.com/No-Copyright-Gang-447299905675091/";
+
         public static void Uploader()
         {
             Console.WriteLine("NCG Uploader");
@@ -28,7 +30,7 @@ namespace NCG_Full
             {
                 int hourNow = DateTime.Now.Hour;
 
-                if ((hourNow > 10 && hourNow < 16) && File.ReadAllText(basePath + @"Memory\LastUpload.txt") != Convert.ToString(DateTime.Now.Date))
+                if (/*(hourNow > 10 && hourNow < 16) && File.ReadAllText(basePath + @"Memory\LastUpload.txt") != Convert.ToString(DateTime.Now.Date)*/true)
                 {
 
                     Console.WriteLine("\nLooking for uploading...");
@@ -107,11 +109,12 @@ namespace NCG_Full
             var video = new Video();
             video.Snippet = new VideoSnippet();
             video.Snippet.Title = videoTitle.Replace('∖', '\\');
-            video.Snippet.Description = "✩ 100% free song to use ✩\n✩ no copyright ✩\n✩ enjoy ! ✩";
+            video.Snippet.Description = "Facebook page : " + facebookLink + "\n✩ 100% free song to use ✩\n✩ no copyright ✩\n✩ enjoy ! ✩";
             video.Snippet.Tags = new string[] { "copyright", "free", "music", "song", "copyrighted", "musics", "songs" };
             //video.Snippet.CategoryId = "22"; // See https://developers.google.com/youtube/v3/docs/videoCategories/list
             video.Status = new VideoStatus();
-            video.Status.PrivacyStatus = "public"; // or "private"
+            //video.Status.PrivacyStatus = "public";
+            video.Status.PrivacyStatus = "private";
 
             using (var fileStream = new FileStream(videoPath, FileMode.Open))
             {

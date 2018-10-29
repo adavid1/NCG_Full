@@ -37,6 +37,7 @@ namespace NCG_Full
             channels.Rows.Add("UCi2bIyFtz-JdI-ou8kaqsqg", "Trap Music Now.");
             channels.Rows.Add("UCvmUdL2NHWlj1NRiNJPI-TQ", "EDM Bot");
             channels.Rows.Add("UCj_Y-xJ2DRDGP4ilfzplCOQ", "House Nation");
+            channels.Rows.Add("UCA2zt34_chJ1S0n9Ke_zh6g", "Car Music");
 
 
             foreach (DataRow channel in channels.Rows)
@@ -57,9 +58,9 @@ namespace NCG_Full
                     string videoUrl = "https://www.youtube.com/watch?v=" + video.Id.VideoId;
                     string videoName = CheckChar(video.Snippet.Title);
                     string uploadDate = video.Snippet.PublishedAt.ToString().Substring(0, 10);
-                    string todayDate = DateTime.Now.ToString().Substring(0, 10);
+                    string yesterdayDate = DateTime.Now.AddDays(-1).ToString().Substring(0, 10);
 
-                    if ((CheckIfCopyrighted(videoUrl) == false) && (uploadDate == todayDate) && (CheckIfAlreadyDL(video.Id.VideoId) == false) && !videoName.Contains("Video"))
+                    if ((CheckIfCopyrighted(videoUrl) == false) && (uploadDate == yesterdayDate) && (CheckIfAlreadyDL(video.Id.VideoId) == false) && !videoName.Contains("Video"))
                     {
                         Console.WriteLine("\nDownloading " + videoName);
                         AudioDownloader(videoUrl, videoName); //Download the video
