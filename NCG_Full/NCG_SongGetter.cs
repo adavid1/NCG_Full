@@ -5,14 +5,16 @@ using MediaToolkit.Model;
 using System;
 using System.Data;
 using System.IO;
+using System.Threading.Tasks;
 using VideoLibrary;
+using YoutubeExplode;
+using YoutubeExplode.Models.MediaStreams;
 
 namespace NCG_Full
 {
     class NCG_SongGetter
     {
-        const string basePath = @"C:\Users\Axel David\Documents\Code\NCG\";
-        public static string pathToSongs = basePath + @"songs\";
+        public static string pathToSongs = Program.basePath + @"songs\";
         public static string v_channelName;
 
         public static void SongGetter()
@@ -63,10 +65,11 @@ namespace NCG_Full
                     if ((CheckIfCopyrighted(videoUrl) == false) && (uploadDate == yesterdayDate) && (CheckIfAlreadyDL(video.Id.VideoId) == false) && !videoName.Contains("Video"))
                     {
                         Console.WriteLine("\nDownloading " + videoName);
-                        AudioDownloader(videoUrl, videoName); //Download the video
+                        var task = AudioDownloader(videoUrl, videoName); //Download the video
+                        task.Wait();
                         RenameAudioFile(videoName);
 
-                        File.AppendAllText(basePath + @"Memory\DownloadHistory.txt", video.Id.VideoId + Environment.NewLine);
+                        File.AppendAllText(Program.basePath + @"Memory\DownloadHistory.txt", video.Id.VideoId + Environment.NewLine);
                     }
                 }
             }
@@ -96,7 +99,7 @@ namespace NCG_Full
 
         public static bool CheckIfAlreadyDL(string videoId)
         {
-            foreach (string line in File.ReadLines(basePath + @"Memory\DownloadHistory.txt"))
+            foreach (string line in File.ReadLines(Program.basePath + @"Memory\DownloadHistory.txt"))
             {
                 if (line.Contains(videoId))
                 {
@@ -106,11 +109,36 @@ namespace NCG_Full
             return false;
         }
 
-        public static void AudioDownloader(string link, string videoName)
+        public static async Task AudioDownloader(string link, string videoName) //YoutubeExplode
+        {
+            var id = YoutubeClient.ParseVideoId(link);
+
+            var client = new YoutubeClient();
+            var streamInfoSet = await client.GetVideoMediaStreamInfosAsync(id);
+
+            var streamInfo = streamInfoSet.Muxed.WithHighestVideoQuality();
+            var ext = streamInfo.Container.GetFileExtension();
+            await client.DownloadMediaStreamAsync(streamInfo, $"{pathToSongs + videoName}.mp4");
+
+            var inputFile = new MediaFile { Filename = $"{pathToSongs + videoName}.mp4" };
+            var outputFile = new MediaFile { Filename = $"{pathToSongs + videoName}.mp3" };
+
+            using (var engine = new Engine())
+            {
+                engine.GetMetadata(inputFile);
+                engine.Convert(inputFile, outputFile);
+            }
+
+            File.Delete($"{pathToSongs + videoName}.mp4");
+            Console.WriteLine("Downloaded : " + videoName);
+        }
+
+        public static void AudioDownloader2(string link, string videoName) //VideoLibrary
         {
             var youtube = YouTube.Default;
             var vid = youtube.GetVideo(link);
-            File.WriteAllBytes(pathToSongs + videoName, vid.GetBytes());
+            var video = vid.GetBytes();
+            File.WriteAllBytes(pathToSongs + videoName, video);
 
             var inputFile = new MediaFile { Filename = pathToSongs + videoName };
             var outputFile = new MediaFile { Filename = $"{pathToSongs + videoName}.mp3" };

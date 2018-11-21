@@ -5,6 +5,8 @@ namespace NCG_Full
 {
     class Program
     {
+        public const string basePath = @"C:\Users\Axel David\Documents\Code\NCG\";
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -20,10 +22,12 @@ namespace NCG_Full
 
                 NCG_Uploader.Uploader();
 
+                NCG_FeedGetter.FeedGetter();
+
 
                 Console.Write("Sleeping... \n");
 
-                for (int minutes = 29; minutes >= 0; minutes--) // 30 min
+                for (int minutes = 9; minutes >= 0; minutes--) // 30 min
                 {
                     for (int seconds = 60; seconds >= 1; seconds--)
                     {

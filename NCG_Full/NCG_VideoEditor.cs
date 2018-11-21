@@ -12,8 +12,6 @@ namespace NCG_Full
 {
     class NCG_VideoEditor
     {
-        const string basePath = @"C:\Users\Axel David\Documents\Code\NCG\";
-
         public static void VideoEditor()
         {
             Console.WriteLine("NCG Video editor");
@@ -31,10 +29,10 @@ namespace NCG_Full
                 picFolder = false;
 
                 //Get oldest song
-                if (Directory.EnumerateFileSystemEntries(basePath + @"\songs").Any())
+                if (Directory.EnumerateFileSystemEntries(Program.basePath + @"\songs").Any())
                 {
                     songFolder = true;
-                    DirectoryInfo songsDir = new DirectoryInfo(basePath + @"\songs");//Assuming Test is your Folder
+                    DirectoryInfo songsDir = new DirectoryInfo(Program.basePath + @"\songs");//Assuming Test is your Folder
                     var oldestSong = songsDir
                     .GetFiles("*.mp3")
                     .OrderBy(file => file.CreationTime)
@@ -52,12 +50,12 @@ namespace NCG_Full
                 }
 
                 //Get random background
-                if (Directory.EnumerateFileSystemEntries(basePath + @"pictures\backgrounds\").Any())
+                if (Directory.EnumerateFileSystemEntries(Program.basePath + @"pictures\backgrounds\").Any())
                 {
                     var rand = new Random();
 
                     picFolder = true;
-                    var pics = Directory.GetFiles(basePath + @"pictures\backgrounds\");
+                    var pics = Directory.GetFiles(Program.basePath + @"pictures\backgrounds\");
 
                     backgroundPath = pics[rand.Next(pics.Length)];
                 }
@@ -78,7 +76,7 @@ namespace NCG_Full
 
                 if (songFolder && picFolder)
                 {
-                    string videoPath = basePath + @"videos\" + songName + ".mp4";
+                    string videoPath = Program.basePath + @"videos\" + songName + ".mp4";
                     int bitrate = 44100, samplerate = 192000, fps = 30;
                     double progress = 0;
                     byte[] audioPart1, audioPart2, audioPart3, audioPart4;
@@ -134,11 +132,11 @@ namespace NCG_Full
 
                                 if (x < 330)
                                 {
-                                    logo = Bitmap.FromFile(basePath + @"pictures\overlay\intro\intro_" + x.ToString("D6") + ".png") as Bitmap;
+                                    logo = Bitmap.FromFile(Program.basePath + @"pictures\overlay\intro\intro_" + x.ToString("D6") + ".png") as Bitmap;
                                 }
                                 else
                                 {
-                                    logo = Bitmap.FromFile(basePath + @"pictures\overlay\play\play_" + playCounter.ToString("D6") + ".png") as Bitmap;
+                                    logo = Bitmap.FromFile(Program.basePath + @"pictures\overlay\play\play_" + playCounter.ToString("D6") + ".png") as Bitmap;
                                     if (playCounter < 89)
                                     {
                                         playCounter++;
@@ -181,12 +179,12 @@ namespace NCG_Full
 
         public static Bitmap CombineBitmap(Bitmap lowerLayer, Bitmap upperLayer)
         {
-            var output = new Bitmap(lowerLayer.Width, lowerLayer.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var output = new Bitmap(1920/*lowerLayer.Width*/, 1080/*lowerLayer.Height*/, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             var graphics = Graphics.FromImage(output);
             graphics.CompositingMode = CompositingMode.SourceOver;
 
-            graphics.DrawImage(lowerLayer, 0, 0);
-            graphics.DrawImage(upperLayer, 0, 0);
+            graphics.DrawImage(lowerLayer, 0, 0, 1920, 1080);
+            graphics.DrawImage(upperLayer, 0, 0, 1920, 1080);
             graphics.Dispose();
 
             return output;

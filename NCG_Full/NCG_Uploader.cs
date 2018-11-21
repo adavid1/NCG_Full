@@ -15,8 +15,6 @@ namespace NCG_Full
 {
     class NCG_Uploader
     {
-        const string basePath = @"C:\Users\Axel David\Documents\Code\NCG\";
-
         const string facebookLink = "https://www.facebook.com/No-Copyright-Gang-447299905675091/";
 
         public static void Uploader()
@@ -39,10 +37,10 @@ namespace NCG_Full
                     videoFolder = false;
 
                     //Get oldest song
-                    if (Directory.EnumerateFileSystemEntries(basePath + @"\videos").Any())
+                    if (Directory.EnumerateFileSystemEntries(Program.basePath + @"\videos").Any())
                     {
                         videoFolder = true;
-                        DirectoryInfo songsDir = new DirectoryInfo(basePath + @"\videos");
+                        DirectoryInfo songsDir = new DirectoryInfo(Program.basePath + @"\videos");
                         var oldestVideo = songsDir
                         .GetFiles("*.mp4")
                         .OrderBy(file => file.CreationTime)
@@ -75,7 +73,7 @@ namespace NCG_Full
                         }
                     }
 
-                    File.WriteAllText(basePath + @"Memory\LastUpload.txt", Convert.ToString(DateTime.Now.Date));
+                    File.WriteAllText(Program.basePath + @"Memory\LastUpload.txt", Convert.ToString(DateTime.Now.Date));
                 }
                 else
                 {
