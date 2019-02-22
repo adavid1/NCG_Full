@@ -5,7 +5,7 @@ namespace NCG_Full
 {
     class Program
     {
-        public const string basePath = @"C:\Users\Axel David\Documents\Code\NCG\";
+        public const string basePath = @"C:\Users\212673582\Documents\Personnel\NCG\";
 
         [STAThread]
         static void Main(string[] args)
