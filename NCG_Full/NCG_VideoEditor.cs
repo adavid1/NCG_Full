@@ -192,6 +192,9 @@ namespace NCG_Full
 
         public static void ClearFiles(string videoPath, string backgroundPath, string songPath)
         {
+            Console.WriteLine("Archiving background...");
+            File.Copy(backgroundPath, Program.basePath + @"pictures\used_backgrounds\" + Path.GetFileName(backgroundPath));
+
             Console.WriteLine("Removing files...");
             if (File.Exists(videoPath))
             {

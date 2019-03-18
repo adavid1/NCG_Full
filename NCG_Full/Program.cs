@@ -27,7 +27,7 @@ namespace NCG_Full
 
                 Console.Write("Sleeping... \n");
 
-                for (int minutes = 9; minutes >= 0; minutes--) // 30 min
+                /*for (int minutes = 9; minutes >= 0; minutes--) // 30 min
                 {
                     for (int seconds = 60; seconds >= 1; seconds--)
                     {
@@ -42,7 +42,7 @@ namespace NCG_Full
                         }
                         Thread.Sleep(1000);
                     }
-                }
+                }*/
 
                 Console.Write("\n\n\n");
             }

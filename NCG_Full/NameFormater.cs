@@ -73,6 +73,9 @@ namespace NCG_Full
                         formatedName = nonFormatedName + " [Electro∖House]";
                     }
                     break;
+                case "JacK Music":
+                    formatedName = nonFormatedName + " [EDM∖House]";
+                    break;
                 case "EDM Bot":
                         formatedName = nonFormatedName + " [Trap∖EDM]";
                     break;
