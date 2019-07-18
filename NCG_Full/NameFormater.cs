@@ -116,6 +116,10 @@ namespace NCG_Full
                     formatedName = nonFormatedName.Replace("(Bass Boosted)","");
                     formatedName = formatedName + " [Electro∖House]";
                     break;
+                case "NEFFEX Music":
+                    formatedName = nonFormatedName.Replace("[Copyright Free]", "");
+                    formatedName = formatedName + " [Electro∖Dubstep]";
+                    break;
             }
 
             return formatedName;

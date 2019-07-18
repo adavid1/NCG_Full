@@ -73,6 +73,13 @@ namespace NCG_Full
                     break;
                 }
 
+                if (songDuration < 120) //delete file is duration is less than 2min
+                {
+                    Console.WriteLine("Song too short, deleting file...");
+                    File.Delete(songPath);
+                    break;
+                }
+
 
                 if (songFolder && picFolder)
                 {

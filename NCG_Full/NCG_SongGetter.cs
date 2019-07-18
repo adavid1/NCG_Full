@@ -64,6 +64,7 @@ namespace NCG_Full
             channels.Rows.Add("UCj_Y-xJ2DRDGP4ilfzplCOQ", "House Nation");
             channels.Rows.Add("UCA2zt34_chJ1S0n9Ke_zh6g", "Car Music");
             channels.Rows.Add("UCjIgbUrRqLPRDAqeAdcYupw", "JacK Music");
+            channels.Rows.Add("UCBefBxNTPoNCQBU_Lta6Nvg", "NEFFEX Music");
 
 
             foreach (DataRow channel in channels.Rows)
