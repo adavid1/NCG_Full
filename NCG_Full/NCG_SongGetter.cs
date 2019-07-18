@@ -66,6 +66,8 @@ namespace NCG_Full
             channels.Rows.Add("UCjIgbUrRqLPRDAqeAdcYupw", "JacK Music");
             channels.Rows.Add("UCBefBxNTPoNCQBU_Lta6Nvg", "NEFFEX Music");
 
+            Console.WriteLine("\nDatabase : " + channels.Rows.Count + " channels");
+
 
             foreach (DataRow channel in channels.Rows)
             {

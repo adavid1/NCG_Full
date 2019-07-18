@@ -114,11 +114,11 @@ namespace NCG_Full
                     break;
                 case "Car Music":
                     formatedName = nonFormatedName.Replace("(Bass Boosted)","");
-                    formatedName = formatedName + " [Electro∖House]";
+                    formatedName += " [Electro∖House]";
                     break;
                 case "NEFFEX Music":
                     formatedName = nonFormatedName.Replace("[Copyright Free]", "");
-                    formatedName = formatedName + " [Electro∖Dubstep]";
+                    formatedName += " [Electro∖Dubstep]";
                     break;
             }
 
