@@ -11,7 +11,7 @@ namespace NCG_Full
             switch (channelName)
             {
                 case "Vital EDM":
-                    formatedName = nonFormatedName.Split(']')[1].Substring(1) + " [Electro∖Dubstep]";
+                    formatedName = nonFormatedName/*.Split(']')[1].Substring(1)*/ + " [Electro∖Dubstep]";
                     formatedName.Replace(" (Vital Release)", "");
                     break;
                 case "Arc North":

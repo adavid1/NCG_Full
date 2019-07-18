@@ -12,8 +12,6 @@ namespace NCG_Full
             Console.WriteLine("NCG Feed Getter");
             Console.WriteLine("============================");
 
-            int hourNow = DateTime.Now.Hour;
-
             if (File.ReadAllText(Program.basePath + @"Memory\LastFeedRefresh.txt") != Convert.ToString(DateTime.Now.Date))
             {
                 try

@@ -15,13 +15,36 @@ namespace NCG_Full
     class NCG_SongGetter
     {
         public static string pathToSongs = Program.basePath + @"songs\";
-        public static string v_channelName;
+        public static string channelName;
 
         public static void SongGetter()
         {
             Console.WriteLine("NCG Song Getter");
             Console.WriteLine("============================");
 
+            if (File.ReadAllText(Program.basePath + @"Memory\LastSearch.txt") != Convert.ToString(DateTime.Now.Date))
+            {
+                try
+                {
+                    GetSongs();
+                }
+                catch (AggregateException ex)
+                {
+                    foreach (var e in ex.InnerExceptions)
+                    {
+                        Console.WriteLine("Error: " + e.Message);
+                    }
+                }
+                File.WriteAllText(Program.basePath + @"Memory\LastSearch.txt", Convert.ToString(DateTime.Now.Date));
+                Console.WriteLine("\nResearch of the day done\n\n");
+            }
+            else
+            {
+                Console.WriteLine("\nResearch already done today\n\n");
+            }
+        }
+        public static void GetSongs()
+        {
             DataTable channels = new DataTable();
             channels.Columns.Add("id", typeof(string));
             channels.Columns.Add("name", typeof(string));
@@ -46,7 +69,7 @@ namespace NCG_Full
             foreach (DataRow channel in channels.Rows)
             {
                 Console.WriteLine("\nSearching on channel \"" + channel["name"] + "\" ...");
-                v_channelName = channel["name"].ToString();
+                channelName = channel["name"].ToString();
 
                 var yt = new YouTubeService(new BaseClientService.Initializer() { ApiKey = "AIzaSyBuoiaCssYGs86HMJ0CcWnsAhxXP7R29XQ" });
                 var searchListRequest = yt.Search.List("snippet");
@@ -63,7 +86,7 @@ namespace NCG_Full
                     string uploadDate = video.Snippet.PublishedAt.ToString().Substring(0, 10);
                     string yesterdayDate = DateTime.Now.AddDays(-1).ToString().Substring(0, 10);
 
-                    if ((CheckIfCopyrighted(videoUrl) == false) && (uploadDate == yesterdayDate) && (CheckIfAlreadyDL(video.Id.VideoId) == false) && !videoName.Contains("Video"))
+                    if (/*(CheckIfCopyrighted(videoUrl) == false) &&*/ (uploadDate == yesterdayDate) && (CheckIfAlreadyDL(video.Id.VideoId) == false) && !videoName.Contains("Video"))
                     {
                         Console.WriteLine("\nDownloading " + videoName);
                         var task = AudioDownloader(videoUrl, videoName); //Download the video
@@ -78,8 +101,12 @@ namespace NCG_Full
             Console.WriteLine("\nExiting NCG Song Getter\n\n");
         }
 
+        /// <summary>
+        /// NOT WORKING
+        /// </summary>
         public static bool CheckIfCopyrighted(string videoUrl)
         {
+            //NOT WORKING
             string webpageData;
             using (System.Net.WebClient webClient = new System.Net.WebClient())
                 webpageData = webClient.DownloadString(videoUrl);
@@ -156,7 +183,7 @@ namespace NCG_Full
 
         public static void RenameAudioFile(string videoName)
         {
-            File.Move(pathToSongs + videoName + ".mp3", pathToSongs + NameFormater.FormatByChannel(videoName, v_channelName) + ".mp3");
+            File.Move(pathToSongs + videoName + ".mp3", pathToSongs + NameFormater.FormatByChannel(videoName, channelName) + ".mp3");
         }
 
         public static string CheckChar(string inputString)

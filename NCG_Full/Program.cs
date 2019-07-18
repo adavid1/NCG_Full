@@ -5,7 +5,7 @@ namespace NCG_Full
 {
     class Program
     {
-        public const string basePath = @"C:\Users\212673582\Documents\Personnel\NCG\";
+        public const string basePath = @"C:\Users\212673582\Documents\Code\C#\NCG\";
 
         [STAThread]
         static void Main(string[] args)
@@ -14,7 +14,7 @@ namespace NCG_Full
             Console.WriteLine("                       NCG Full");
             Console.WriteLine("========================================================\n\n");
 
-            while(true)
+            while (true)
             {
                 NCG_SongGetter.SongGetter();
 
