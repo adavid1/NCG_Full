@@ -117,7 +117,7 @@ namespace NCG_Full
                     {
                         double totalFrame = songDuration * fps;
                         int x = 0, playCounter = 0;
-                        Bitmap logo = null, image = null;
+                        Bitmap image = null, overlay = null, links = null;
 
                         videoWriter.Open(videoPath, 1920, 1080, fps, VideoCodec.MPEG4, 50000000, AudioCodec.MP3, bitrate, samplerate, 2);
 
@@ -125,18 +125,14 @@ namespace NCG_Full
                         {
                             for (int compt = 0; compt < fps; compt++) //30 times loop
                             {
-                                if (logo != null)
+                                if (x < 330) //intro (11 seconds)
                                 {
-                                    logo.Dispose();
+                                    overlay = Bitmap.FromFile(Program.basePath + @"pictures\overlay\intro\intro_" + x.ToString("D6") + ".png") as Bitmap;
                                 }
+                                else //after intro
+                                {
 
-                                if (x < 330)
-                                {
-                                    logo = Bitmap.FromFile(Program.basePath + @"pictures\overlay\intro\intro_" + x.ToString("D6") + ".png") as Bitmap;
-                                }
-                                else
-                                {
-                                    logo = Bitmap.FromFile(Program.basePath + @"pictures\overlay\play\play_" + playCounter.ToString("D6") + ".png") as Bitmap;
+                                    overlay = Bitmap.FromFile(Program.basePath + @"pictures\overlay\play\play_" + playCounter.ToString("D6") + ".png") as Bitmap;
                                     if (playCounter < 89)
                                     {
                                         playCounter++;
@@ -145,9 +141,20 @@ namespace NCG_Full
                                     {
                                         playCounter = 0;
                                     }
+
+                                    if (x < 660) //links (11 seconds)
+                                    {
+                                        links = Bitmap.FromFile(Program.basePath + @"pictures\overlay\links\links_" + (x - 330).ToString("D6") + ".png") as Bitmap;
+                                    }
                                 }
 
-                                image = CombineBitmap(background, logo);
+                                image = CombineBitmap(background, overlay, links);
+                                if (links != null)
+                                {
+                                    links.Dispose();
+                                    links = null;
+                                }
+                                overlay.Dispose();
                                 videoWriter.WriteVideoFrame(image);
                                 image.Dispose();
                                 x++;
@@ -177,14 +184,18 @@ namespace NCG_Full
             }
         }
 
-        public static Bitmap CombineBitmap(Bitmap lowerLayer, Bitmap upperLayer)
+        public static Bitmap CombineBitmap(Bitmap lowerLayer, Bitmap upperLayer, Bitmap upperLayer2 = null)
         {
-            var output = new Bitmap(1920/*lowerLayer.Width*/, 1080/*lowerLayer.Height*/, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var output = new Bitmap(1920, 1080, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             var graphics = Graphics.FromImage(output);
             graphics.CompositingMode = CompositingMode.SourceOver;
 
             graphics.DrawImage(lowerLayer, 0, 0, 1920, 1080);
             graphics.DrawImage(upperLayer, 0, 0, 1920, 1080);
+            if (upperLayer2 != null)
+            {
+                graphics.DrawImage(upperLayer2, 0, 0, 1920, 1080);
+            }
             graphics.Dispose();
 
             return output;
