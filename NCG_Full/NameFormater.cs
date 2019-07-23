@@ -120,6 +120,39 @@ namespace NCG_Full
                     formatedName = nonFormatedName.Replace("[Copyright Free]", "");
                     formatedName += " [Electro∖Dubstep]";
                     break;
+                case "Zombr3x":
+                    formatedName = "Zombr3x - " + nonFormatedName + " [Electro∖Dubstep]";
+                    break;
+                case "YESYESOHYES":
+                    formatedName += " [Electro∖Dubstep]";
+                    break;
+                case "Febbs! Official":
+                    if (nonFormatedName.Contains(']'))
+                    {
+                        formatedName = nonFormatedName.Split(']')[1] + " [Electro∖Dubstep]";
+                    }
+                    else //not a song, so gonna be deleted
+                    {
+                        formatedName = nonFormatedName;
+                    }
+                    break;
+                case "DWRX Music":
+                    if (!nonFormatedName.Contains("DWRX"))
+                    {
+                        formatedName = "DWRX - " + nonFormatedName + " [Electro∖EDM]";
+                    }
+                    else
+                    {
+                        formatedName = nonFormatedName + " [Electro∖EDM]";
+                    }
+                    break;
+                case "KINGSMEN MUSIC":
+                    if (nonFormatedName.Contains("LYRICS"))
+                        nonFormatedName = nonFormatedName.Replace("LYRICS", "");
+                    if (nonFormatedName.Contains("(cover)"))
+                        nonFormatedName = nonFormatedName.Replace("(cover)", "");
+                    formatedName = nonFormatedName + " [Rap/Trap]";
+                    break;
             }
 
             return formatedName;
