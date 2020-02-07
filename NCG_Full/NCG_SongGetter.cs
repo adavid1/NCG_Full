@@ -3,12 +3,15 @@ using Google.Apis.YouTube.v3;
 using MediaToolkit;
 using MediaToolkit.Model;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using VideoLibrary;
 using YoutubeExplode;
 using YoutubeExplode.Models.MediaStreams;
+using YoutubeExtractor;
 
 namespace NCG_Full
 {
@@ -36,7 +39,7 @@ namespace NCG_Full
                     }
                 }
                 File.WriteAllText(Program.basePath + @"Memory\LastSearch.txt", Convert.ToString(DateTime.Now.Date));
-                Console.WriteLine("\nResearch of the day done\n\n");
+                Console.WriteLine("Research of the day done\n\n");
             }
             else
             {
@@ -59,7 +62,7 @@ namespace NCG_Full
             channels.Rows.Add("UC3xS7KD-nL8dpireWEUIxNA", "Indefinitely Music");
             channels.Rows.Add("UCV3IseaOx-KwjBgeiood8gg", "DJ Smile Music");
             channels.Rows.Add("UCaB_KyYOjfNHBm0f-TvBmiw", "TrapMusicHDTV");
-            channels.Rows.Add("UCi2bIyFtz-JdI-ou8kaqsqg", "Trap Music Now.");
+            //channels.Rows.Add("UCi2bIyFtz-JdI-ou8kaqsqg", "Trap Music Now."); Removed because too much theme remixes
             channels.Rows.Add("UCvmUdL2NHWlj1NRiNJPI-TQ", "EDM Bot");
             channels.Rows.Add("UCj_Y-xJ2DRDGP4ilfzplCOQ", "House Nation");
             channels.Rows.Add("UCA2zt34_chJ1S0n9Ke_zh6g", "Car Music");
@@ -97,8 +100,9 @@ namespace NCG_Full
                     if (/*(CheckIfCopyrighted(videoUrl) == false) &&*/ (uploadDate == yesterdayDate) && (CheckIfAlreadyDL(video.Id.VideoId) == false) && !videoName.Contains("Video"))
                     {
                         Console.WriteLine("\nDownloading " + videoName);
-                        var task = AudioDownloader(videoUrl, videoName); //Download the video
-                        task.Wait();
+                        /*var task = */VideoDownloader2(videoUrl, videoName); //Download the video
+                        //task.Wait();
+                        ExtractAudio(videoName); //Extract audio from video
                         RenameAudioFile(videoName);
 
                         File.AppendAllText(Program.basePath + @"Memory\DownloadHistory.txt", video.Id.VideoId + Environment.NewLine);
@@ -145,7 +149,7 @@ namespace NCG_Full
             return false;
         }
 
-        public static async Task AudioDownloader(string link, string videoName) //YoutubeExplode
+        public static async Task VideoDownloader(string link, string videoName) //YoutubeExplode
         {
             var id = YoutubeClient.ParseVideoId(link);
 
@@ -154,8 +158,47 @@ namespace NCG_Full
 
             var streamInfo = streamInfoSet.Muxed.WithHighestVideoQuality();
             var ext = streamInfo.Container.GetFileExtension();
-            await client.DownloadMediaStreamAsync(streamInfo, $"{pathToSongs + videoName}.mp4");
+            await client.DownloadMediaStreamAsync(streamInfo, $"downloaded_video.{ext}");
 
+            Console.WriteLine("Downloaded : " + videoName);
+        }
+
+        public static void VideoDownloader2(string link, string videoName) //VideoLibrary
+        {
+            var youtube = YouTube.Default;
+            var vid = youtube.GetVideo(link);
+            var video = vid.GetBytes();
+            File.WriteAllBytes(pathToSongs + videoName + ".mp4", video);
+
+            Console.WriteLine("Downloaded : " + videoName);
+        }
+
+        public static void AudioDownloader(string link, string videoName) //YoutubeExtractor
+        {
+            IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(link);
+
+            VideoInfo video = videoInfos
+                .Where(info => info.CanExtractAudio)
+                .OrderByDescending(info => info.AudioBitrate)
+                .First();
+
+            if (video.RequiresDecryption)
+            {
+                DownloadUrlResolver.DecryptDownloadUrl(video);
+            }
+
+            var audioDownloader = new AudioDownloader(video, $"{pathToSongs + videoName}.mp3");
+
+            audioDownloader.DownloadProgressChanged += (sender, args) => Console.WriteLine(args.ProgressPercentage * 0.85);
+            audioDownloader.AudioExtractionProgressChanged += (sender, args) => Console.WriteLine(85 + args.ProgressPercentage * 0.15);
+
+            audioDownloader.Execute();
+
+            Console.WriteLine("Downloaded : " + videoName);
+        }
+
+        public static void ExtractAudio(string videoName)
+        {
             var inputFile = new MediaFile { Filename = $"{pathToSongs + videoName}.mp4" };
             var outputFile = new MediaFile { Filename = $"{pathToSongs + videoName}.mp3" };
 
@@ -166,27 +209,7 @@ namespace NCG_Full
             }
 
             File.Delete($"{pathToSongs + videoName}.mp4");
-            Console.WriteLine("Downloaded : " + videoName);
-        }
-
-        public static void AudioDownloader2(string link, string videoName) //VideoLibrary
-        {
-            var youtube = YouTube.Default;
-            var vid = youtube.GetVideo(link);
-            var video = vid.GetBytes();
-            File.WriteAllBytes(pathToSongs + videoName, video);
-
-            var inputFile = new MediaFile { Filename = pathToSongs + videoName };
-            var outputFile = new MediaFile { Filename = $"{pathToSongs + videoName}.mp3" };
-
-            using (var engine = new Engine())
-            {
-                engine.GetMetadata(inputFile);
-                engine.Convert(inputFile, outputFile);
-            }
-
-            File.Delete(pathToSongs + videoName);
-            Console.WriteLine("Downloaded : " + videoName);
+            Console.WriteLine("Extracted : " + videoName);
         }
 
         public static void RenameAudioFile(string videoName)

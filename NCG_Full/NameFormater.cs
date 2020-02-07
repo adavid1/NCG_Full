@@ -38,7 +38,7 @@ namespace NCG_Full
                     }
                     break;
                 case "Simplify.":
-                    formatedName = nonFormatedName.Split('[')[0] + "[Electro∖Dubstep]";
+                    formatedName = nonFormatedName.Split('[')[0] + " [Electro∖Dubstep]";
                     break;
                 case "Trap City":
                     if (nonFormatedName.Contains('('))
@@ -124,7 +124,7 @@ namespace NCG_Full
                     formatedName = "Zombr3x - " + nonFormatedName + " [Electro∖Dubstep]";
                     break;
                 case "YESYESOHYES":
-                    formatedName += " [Electro∖Dubstep]";
+                    formatedName = nonFormatedName + " [Electro∖Dubstep]";
                     break;
                 case "Febbs! Official":
                     if (nonFormatedName.Contains(']'))
@@ -139,11 +139,11 @@ namespace NCG_Full
                 case "DWRX Music":
                     if (!nonFormatedName.Contains("DWRX"))
                     {
-                        formatedName = "DWRX - " + nonFormatedName + " [Electro∖EDM]";
+                        formatedName = "DWRX - " + nonFormatedName + " [Trap]";
                     }
                     else
                     {
-                        formatedName = nonFormatedName + " [Electro∖EDM]";
+                        formatedName = nonFormatedName + " [Trap]";
                     }
                     break;
                 case "KINGSMEN MUSIC":
@@ -151,7 +151,7 @@ namespace NCG_Full
                         nonFormatedName = nonFormatedName.Replace("LYRICS", "");
                     if (nonFormatedName.Contains("(cover)"))
                         nonFormatedName = nonFormatedName.Replace("(cover)", "");
-                    formatedName = nonFormatedName + " [Rap/Trap]";
+                    formatedName = nonFormatedName + " [Rap∖Trap]";
                     break;
             }
 

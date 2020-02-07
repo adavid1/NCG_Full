@@ -15,7 +15,7 @@ namespace NCG_Full
 {
     class NCG_Uploader
     {
-        const string facebookLink = "https://www.facebook.com/No-Copyright-Gang-447299905675091/";
+        const string facebookLink = "https://www.facebook.com/nocopyrightgang/";
 
         public static void Uploader()
         {
