@@ -34,7 +34,7 @@ This project was primarily created as a way to **train and improve my C# program
 
 ```
  ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
- │   SongGetter  │──────▶│  VideoEditor  │──────▶│   Uploader     │
+ │   SongGetter  │─────▶│   VideoEditor  │─────▶│   Uploader     │
  │ (Download mp3)│       │(Add image + mp3)│     │ (Upload video) │
  └───────────────┘       └───────────────┘       └───────────────┘
          │                          │                     │
