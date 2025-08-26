@@ -33,14 +33,14 @@ This project was primarily created as a way to **train and improve my C# program
 ## Workflow Diagram
 
 ```
- ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
- │   SongGetter  │─────▶│   VideoEditor  │─────▶│   Uploader     │
- │ (Download mp3)│       │(Add image + mp3)│     │ (Upload video) │
- └───────────────┘       └───────────────┘       └───────────────┘
-         │                          │                     │
-         ▼                          ▼                     ▼
-   Free music feeds         Local image pool       YouTube Channel
-   (YouTube sources)             (random)        [No Copyright Gang]
+ ┌───────────────┐       ┌─────────────────┐       ┌────────────────┐
+ │   SongGetter  │─────▶│   VideoEditor    │─────▶│   Uploader     │
+ │ (Download mp3)│       │(Add image + mp3)│       │ (Upload video) │
+ └───────────────┘       └─────────────────┘       └────────────────┘
+         │                         │                       │
+         ▼                         ▼                       ▼
+   Free music feeds        Local image pool         YouTube Channel
+   (YouTube sources)            (random)          [No Copyright Gang]
 ```
 
 ## Technology Stack
