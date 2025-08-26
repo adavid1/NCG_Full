@@ -1,6 +1,8 @@
 # NCG Full
 
-**NCG Full** is a C# automation project that streamlines the process of sourcing, editing, and publishing royalty-free music content to YouTube. It was originally built to support the **No Copyright Gang** channel by automating repetitive workflows like fetching tracks, generating videos, and uploading them with minimal manual intervention.
+**NCG Full** is a C# automation project that streamlines the process of sourcing, editing, and publishing royalty-free music content to YouTube. It was originally built to support the [**No Copyright Gang**](https://www.youtube.com/@NoCopyrightGang) channel by automating repetitive workflows like fetching tracks, generating videos, and uploading them with minimal manual intervention.
+
+This project was primarily created as a way to **train and improve my C# programming skills**, while also solving a practical challenge.
 
 ## Features
 
@@ -27,6 +29,19 @@
   3. Upload to YouTube
   4. Update feed
   5. Sleep and repeat
+
+## Workflow Diagram
+
+```
+ ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+ │   SongGetter  │──────▶│  VideoEditor  │──────▶│   Uploader     │
+ │ (Download mp3)│       │(Add image + mp3)│     │ (Upload video) │
+ └───────────────┘       └───────────────┘       └───────────────┘
+         │                          │                     │
+         ▼                          ▼                     ▼
+   Free music feeds         Local image pool       YouTube Channel
+   (YouTube sources)             (random)        [No Copyright Gang]
+```
 
 ## Technology Stack
 
@@ -70,7 +85,7 @@ The pipeline will continuously fetch, edit, and upload content until terminated.
 
 ## Purpose & Learnings
 
-This project was a personal experiment in **automation, API integration, and media processing**. It provided hands-on experience with:
+This project was built both as a **practical automation tool** and as a way to **train and strengthen my C# skills**. Through it, I gained hands-on experience with:
 
 * Consuming third-party APIs (YouTube Data API)
 * Automating multimedia workflows (audio/video processing)
